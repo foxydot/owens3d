@@ -3,6 +3,7 @@ if (!class_exists('MSDArtworkCPT')) {
 	class MSDArtworkCPT {
 		//Properties
 		var $cpt = 'artwork';
+		var $javascript = false;
 		//Methods
 		/**
 		 * PHP 4 Compatible Constructor
@@ -24,7 +25,9 @@ if (!class_exists('MSDArtworkCPT')) {
 			add_action('admin_footer',array(&$this,'info_footer_hook') );
 
 			//Filters
-			add_filter( 'enter_title_here', array(&$this,'change_default_title') );
+            add_filter('template_include', array(&$this,'theme_redirect'),99);
+
+            add_filter( 'enter_title_here', array(&$this,'change_default_title') );
 			add_filter( 'genesis_attr_artwork', array(&$this,'custom_add_artwork_attr') );
 
 
@@ -69,10 +72,10 @@ if (!class_exists('MSDArtworkCPT')) {
 				'query_var' => true,
 
 				'capabilities' => array(
-					'manage_terms' => 'manage_artwork_categories',
-					'edit_terms' => 'manage_artwork_categories',
-					'delete_terms' => 'manage_artwork_categories',
-					'assign_terms' => 'edit_page',
+                    'manage_terms' => 'manage_categories',
+                    'edit_terms' => 'manage_categories',
+                    'delete_terms' => 'manage_categories',
+                    'assign_terms' => 'edit_page',
 				),
 			);
 
@@ -109,9 +112,9 @@ if (!class_exists('MSDArtworkCPT')) {
 				'query_var' => true,
 
 				'capabilities' => array(
-					'manage_terms' => 'manage_artwork_categories',
-					'edit_terms' => 'manage_artwork_categories',
-					'delete_terms' => 'manage_artwork_categories',
+					'manage_terms' => 'manage_categories',
+					'edit_terms' => 'manage_categories',
+					'delete_terms' => 'manage_categories',
 					'assign_terms' => 'edit_page',
 				),
 			);
@@ -285,19 +288,65 @@ if (!class_exists('MSDArtworkCPT')) {
 		}
 
 		function cpt_display(){
-			global $post;
+            global $post,$artwork_info;
 			if(is_cpt($this->cpt)) {
 				if (is_single()){
-					//display content here
+                    $artwork_info->the_meta();
+                    $fields = get_post_meta($post->ID,'_artwork_information_fields',true);
+                    foreach ($fields as $field){
+                        $$field = get_post_meta($post->ID,$field,true);
+                        if(strlen($$field) == 0){
+                            $$field = false;
+                        }
+                    }
+                    if($_artwork_gallery) {
+                        $gallery[] = do_shortcode($_artwork_gallery);
+                    }
+                    if($_artwork_video){
+                        $gallery[] = '<h3>The Process</h3>';
+                        $gallery[] = apply_filters('the_content',$_artwork_video);
+                    }
+$terms = get_the_terms( get_the_ID(), 'artwork_category' );
+
+if ( $terms && ! is_wp_error( $terms ) ) :
+
+    $draught_links = array();
+
+    foreach ( $terms as $term ) {
+        $draught_links[] = $term->name;
+    }
+
+    $on_draught = join( ", ", $draught_links );
+endif;
+                    $info[] = $on_draught;
+                    $info[] = do_shortcode($post->post_content);
+                    if($_artwork_price) {
+                        $info[] = '<li>' . $_artwork_price . '</li>';
+                    }
+                    if($_artwork_date) {
+                        $info[] = '<li>' . $_artwork_date . '</li>';
+                    }
+                    if($_artwork_height || $_artwork_width || $_artwork_depth) {
+                        $info[] = '<li>' . $_artwork_height . 'H x ' . $_artwork_width . 'W x ' .  $_artwork_depth . 'D </li>';
+                    }
+                    if(has_term('available-for-purchase','artwork_category')){
+                        $info[] = '<div class="col-xs-12">'.do_shortcode('[gravityform id="1" title="true" description="true"]').'</div>';
+                    }
+                    $ret[] = '<div class="col-sm-8 col-xs-12">'.implode("\n",$gallery).'</div><div class="col-sm-4 col-xs-12">'.implode("\n",$info).'</div>';
+
 				} else {
 					//display for aggregate here
 				}
+				print implode("\n",$ret);
+				if($this->javascript){
+				    add_action('wp_footer',array($this,'add_page_javascript'));
+                }
 			}
 		}
 
 		function shortcode_handler($atts){
 			extract(shortcode_atts( array(
-				'count' => 3,
+				'count' => -1,
 			), $atts ));
 			$args = array(
 				'post-type' => $this->cpt,
@@ -548,5 +597,29 @@ if (!class_exists('MSDArtworkCPT')) {
 			// return the attributes
 			return $attributes;
 		}
+
+
+        function theme_redirect($return_template) {
+            global $wp;
+            if(!is_cpt($this->cpt)){
+                return $return_template;
+            }
+            //A Specific Custom Post Type
+            if(is_single() && $wp->query_vars["post_type"] == $this->cpt){
+                $templatefilename = 'single-'.$this->cpt.'.php';
+            } elseif (is_archive() && $wp->query_vars["post_type"] == $this->cpt) {
+                $templatefilename = 'archive-'.$this->cpt.'.php';
+                //A Custom Taxonomy Page
+            }
+            if($templatefilename) {
+                if (file_exists(STYLESHEETPATH . '/' . $templatefilename)) {
+                    $return_template = STYLESHEETPATH . '/' . $templatefilename;
+                } else {
+                    $return_template = plugin_dir_path(dirname(__FILE__)) . 'template/' . $templatefilename;
+                }
+            }
+
+            return $return_template;
+        }
 	} //End Class
 } //End if class exists statement

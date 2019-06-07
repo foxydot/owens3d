@@ -13,6 +13,10 @@ if(genesis_test()):
      */
 
     // Initialize Genesis.
+    remove_all_actions('genesis_entry_header');
+    remove_all_actions('genesis_entry_content');
+    global $msd_custom;
+    add_action('genesis_entry_content',array($msd_custom->artwork_class,'cpt_display'));
     genesis();
 else:
     print 'not genesis, sorry.';

@@ -1,0 +1,109 @@
+/* --------------------------------------*/
+/* ---------->>> SLIDESHOW <<<-----------*/
+/* --------------------------------------*/
+#flow_slideshow .konzept_arrow_left, #flow_slideshow .konzept_arrow_right {
+	-webkit-transition: visibility 0s linear 0.25s, opacity 0.25s ease-out;
+	   -moz-transition: visibility 0s linear 0.52s, opacity 0.25s ease-out;
+	    -ms-transition: visibility 0s linear 0.25s, opacity 0.25s ease-out;
+		 -o-transition: visibility 0s linear 0.25s, opacity 0.25s ease-out;
+			transition: visibility 0s linear 0.25s, opacity 0.25s ease-out;
+}
+#flow_slideshow:hover .konzept_arrow_left, #flow_slideshow:hover .konzept_arrow_right {
+	-webkit-transition: visibility 0s linear 0s, opacity 0.25s linear;
+	   -moz-transition: visibility 0s linear 0s, opacity 0.25s linear;
+		-ms-transition: visibility 0s linear 0s, opacity 0.25s linear;
+		 -o-transition: visibility 0s linear 0s, opacity 0.25s linear;
+			transition: visibility 0s linear 0s, opacity 0.25s linear;
+}
+#flow_slideshow .konzept_arrow_left { opacity: 0; visibility: hidden; }
+#flow_slideshow .konzept_arrow_right { opacity: 0; visibility: hidden; }
+#flow_slideshow:hover .konzept_arrow_left { opacity: 0.3; visibility: visible; width: 70px; position: absolute; z-index: 2; left: 0; height: 100%; cursor: pointer; background: url(images/cursors/cursor_prev_white.png) no-repeat center center transparent; }
+#flow_slideshow:hover .konzept_arrow_right { opacity: 0.3; visibility: visible; width: 70px; position: absolute; z-index: 2; right: 0; height: 100%; cursor: pointer; background: url(images/cursors/cursor_next_white.png) no-repeat center center transparent; }
+#flow_slideshow:hover .konzept_arrow_left:hover { opacity: 1; }
+#flow_slideshow:hover .konzept_arrow_right:hover { opacity: 1; }
+
+.slideshow-button-wrapper { max-width:1120px;width:92%;margin:0 auto;position: relative; z-index: 10; }
+	.slideshow-button:before { font: 1em/0 sans-serif; content: attr(data-icon); margin-right: 0.4em; }
+	.slideshow-button {
+		border-left: none; 
+		border-right: none;
+		font: 24px/1em "Open Sans", Arial, sans-serif;
+		font-weight: 900;
+		margin: .5em;
+		display: inline-block;
+		border-top: 1px solid rgba(255,255,255,0.8);
+		box-shadow: 0 0.05em 0 rgba(255, 255, 255, 0.6) inset, 0 3px 3px rgba(0, 0, 0, 0.5);
+		-webkit-transition: box-shadow 0.25s linear;
+		   -moz-transition: box-shadow 0.25s linear;
+			-ms-transition: box-shadow 0.25s linear;
+			 -o-transition: box-shadow 0.25s linear;
+				transition: box-shadow 0.25s linear;
+		z-index: 10;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		user-select: none;
+		text-decoration: none;
+		text-align: center;
+		white-space: pre;
+		
+		position: absolute;
+		right: 0; 
+		top: 0; 
+		color: #f1f1f1; 
+		text-shadow: 0 2px 2px #fff inset;
+		text-transform: uppercase; 
+		padding: 0.7em 1em 0.7em; 
+		-webkit-border-radius: 2em 2em 2em 2em; 
+		-moz-border-radius: 2em 2em 2em 2em; 
+		border-radius: 2em 2em 2em 2em;
+		background-color: transparent;
+		background-image: -moz-linear-gradient(center top , rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0) 75%, rgba(255, 255, 255, 0.25) 100%);
+		background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0) 75%, rgba(255, 255, 255, 0.25) 100%);
+		background-image: linear-gradient(top, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0) 75%, rgba(255, 255, 255, 0.25) 100%);
+		background-image: -ms-linear-gradient(top, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0) 75%, rgba(255, 255, 255, 0.25) 100%);
+	}
+	.slideshow-button:hover { text-decoration: none; cursor: pointer; box-shadow: 0 0.05em 0 rgba(255, 255, 255, 0.6) inset, 0 3px 3px rgba(0, 0, 0, 0.5), 0 0 100px rgba(0, 0, 0, 0.15) inset;
+		-webkit-transition: box-shadow 0.25s linear;
+		   -moz-transition: box-shadow 0.25s linear;
+			-ms-transition: box-shadow 0.25s linear;
+			 -o-transition: box-shadow 0.25s linear;
+				transition: box-shadow 0.25s linear;
+	}
+
+/* Make pager centered */
+/* .flow_slideshow_pager { position: absolute; width: 200%; left: -50%; bottom: 50px; }
+.flow_slideshow_pager ul.inner { position: absolute; left: 50%; }
+.flow_slideshow_pager ul li { width: 15px; height: 15px; border-radius: 50%; background-color: #fff; opacity: 0.5;  position: relative; float: left; margin-right: 2px; background-clip: padding-box; border: 4px solid transparent; left: -50%; cursor: pointer; }
+.flow_slideshow_pager ul li.active, .flow_slideshow_pager ul li:hover { width: 15px; height: 15px; border-radius: 50%; background-color: transparent; opacity: 0.75; border: 4px solid #fff; } */
+
+/* Make pager left bottom aligned */
+.flow_slideshow_pager { bottom: 50px; left: 0; margin: auto; max-width: 1120px; position: absolute; right: 0; }
+.flow_slideshow_pager ul.inner { position: absolute; }
+.flow_slideshow_pager ul li { background-clip: padding-box; background-color: #fff; border: 4px solid transparent; border-radius: 50% 50% 50% 50%; cursor: pointer; float: left; height: 15px; margin-right: 2px; opacity: 0.5; width: 15px; }
+.flow_slideshow_pager ul li.active, .flow_slideshow_pager ul li:hover { width: 15px; height: 15px; border-radius: 50%; -webkit-border-radius: 50%; background-color: transparent; opacity: 0.75; border: 4px solid #fff; }
+
+	#flow_slideshow { width: 100%; position: relative; top: 0; overflow: hidden; clear: both; margin-bottom: 50px; margin-top: -40px; padding-top: 40px; box-sizing: content-box; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; z-index: 99; }
+	#flow_slideshow * { max-height: 330px; overflow: visible !important; }
+		#scroller { float:left; padding: 0 0 0 0; }
+			#scroller ul { list-style: none; display: block; float: left; width: 27000px; }
+				#scroller li { float: left; margin: 0; position: relative; overflow: hidden; height: 330px; }
+					#scroller li img { left: 0; margin: auto; max-height: 450px; position: absolute; right: 0; top: -81px; }
+			#thelist { padding: 0; margin: 0; }
+				#thelist li { }
+					.slideshow-meta-wrapper { display: block; margin: 0 auto; position: absolute; width: 92%; height: 100%; max-width: 1120px; left: 0; right: 0; }
+						.slideshow-meta-inner { display: table; max-width: 1120px; position: absolute; left: 0; right: 0; top: 0; bottom: 0; width: 100%; height: 100%; margin: auto; z-index: 2; vertical-align: middle; }
+							.slideshow-meta-inner-2 { display: table-cell; vertical-align: middle; height: 100%; }
+								.slideshow-meta-title { color: #F8F8F8; font-family: "Open Sans", sans-serif; font-size: 400%; line-height: .875; margin-bottom: 0.25em; word-wrap: break-word; font-weight: 900; width: 37.5%; }
+								.slideshow-meta-description { font-family: "Open Sans", sans-serif; font-weight: 400; font-size: 22px; color: #fff; width: 37.5%; margin: 0; }
+					.slideshow-background { width: 100%; height: 100%; background-color: #00a4a7; }
+	
+	@media (max-width: 1440px) {
+		.slideshow-meta-title { font-size: 337.5%; }
+	}
+	@media (max-width: 950px) {
+		.slideshow-meta-title { font-size: 275%; width: 50%; }
+		.slideshow-meta-description { width: 50%; }
+	}
+	@media (max-width: 640px) {
+		#flow_slideshow { display: none; }
+	}

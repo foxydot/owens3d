@@ -1,0 +1,281 @@
+@media only screen and (min-width: 1040px) {
+
+  /* # Defaults
+  ---------------------------------------------------------------------------------------------------- */
+  body{
+    .site-container{
+    }
+  }
+
+  /* # Structure
+  ---------------------------------------------------------------------------------------------------- */
+
+
+
+  /* ## Column Widths and Positions
+--------------------------------------------- */
+
+  /* ### Wrapping div for .content and .sidebar-primary */
+  .content-sidebar-sidebar .content-sidebar-wrap,
+  .sidebar-content-sidebar .content-sidebar-wrap,
+  .sidebar-sidebar-content .content-sidebar-wrap {
+  }
+
+  .content-sidebar-sidebar .content-sidebar-wrap {
+    float: left;
+  }
+
+  .sidebar-content-sidebar .content-sidebar-wrap,
+  .sidebar-sidebar-content .content-sidebar-wrap {
+    float: right;
+  }
+
+  /* ### Content */
+
+  .content {
+    float: right;
+    order: 2;
+  }
+
+  .content-sidebar .content,
+  .content-sidebar-sidebar .content,
+  .sidebar-content-sidebar .content {
+    float: left;
+    order: 1;
+  }
+
+  .content-sidebar-sidebar .content,
+  .sidebar-content-sidebar .content,
+  .sidebar-sidebar-content .content {
+  }
+
+  .full-width-content .content {
+    float: none;
+    order: 1;
+  }
+
+  /* ### Primary Sidebar */
+
+  .sidebar-primary {
+    float: right;
+  }
+
+  .sidebar-content .sidebar-primary,
+  .sidebar-sidebar-content .sidebar-primary {
+    float: left;
+    order: 1;
+    width: 30%;
+  }
+
+  /* ### Secondary Sidebar */
+
+  .sidebar-secondary {
+    float: left;
+  }
+
+  .content-sidebar-sidebar .sidebar-secondary {
+    float: right;
+  }
+  /* # Common
+  ---------------------------------------------------------------------------------------------------- */
+
+  /* # Widgets
+  ---------------------------------------------------------------------------------------------------- */
+
+  /* # Plugins
+  ---------------------------------------------------------------------------------------------------- */
+
+  /* # Site Header
+  ---------------------------------------------------------------------------------------------------- */
+  .site-header{
+    .title-area, .nav-primary{
+      padding: 1em 0;
+    }
+    .widget-area {
+      display: block;
+    }
+  }
+
+  /* ## Title Area
+  --------------------------------------------- */
+
+
+  /* Widget Area
+  --------------------------------------------- */
+
+  .site-header .widget-area, .pre-header .widget-area {
+    float: right;
+    text-align: right;
+    clear: right;
+    line-height: 1;
+    .widget {
+      display: block;
+      position: static;
+      a.button{
+        font-size: 1.2em;
+      }
+      &.widget_custom_html{
+        position: relative;
+        top: 4em;
+      }
+    }
+    .search-form {
+      display: inline-block;
+      padding: 0;
+      margin-left: 1rem;
+      position: absolute;
+      whitespace: nowrap;
+      top: 0;
+      right: 0;
+      input[type="search"],input[type="text"] {
+        font-size: 1.4rem;
+        width: 5em;
+        background: rgba($white,0);
+        border: 0;
+        line-height: 1;
+        color: $dkgrey;
+        text-transform: uppercase;
+        text-align: right;
+        padding: 0.2em 0.5em;
+        margin-right: 0.5em;
+        margin-bottom: 0.5em;
+        transition: all 1s ease-in-out;
+        &:hover,&:focus{
+          background: rgba($white,1);
+          width: 25em;
+        }
+      }
+
+      input[type="search"]::placeholder,input[type="text"]::placeholder {
+        color: $white;
+        opacity: 1;
+      }
+      input[type="submit"] {
+        @include fontawesome;
+        background: transparent;
+        border: 0 none;
+        clip: auto;
+        color: $ltgrey;
+        display: inline-block;
+        font-size: 1.2em;
+        height: 2em;
+        line-height: 1;
+        text-align: center;
+        width: 2em;
+        right: 1rem;
+        top: 0.9rem;
+        padding: 0.5em 2em 0.5em 0;
+      }
+      &:hover {
+        input[type="search"] {
+        }
+      }
+    }
+  }
+
+  .site-header .widget-area {
+    float: right;
+    text-align: right;
+  }
+
+
+  .page-title-area{
+    //margin-bottom: -360px;
+    .texturize{
+      .gradient{
+        //min-height: 400px;
+        //padding-bottom: 400px;
+        .container{
+          .entry-title {
+          }
+        }
+      }
+    }
+  }
+
+
+
+  /* # Nav
+  ---------------------------------------------------------------------------------------------------- */
+  .nav-primary{
+    float: right;
+  }
+
+  /* # Content
+  ----------------------------------------------------------------------------------------------------- */
+  .entry {
+    padding: 0;
+  }
+  
+  div.building-row {
+    div.building-item {
+      width:45%;
+      display:inline-block;
+      padding: 0 10px;
+      padding-bottom:10px;
+      float:left;
+      .fa {
+        padding-right:5px;
+      }
+    }
+    div.building-item-list {
+      padding-top:10px;
+      p { 
+        font-size: .8em;
+        margin-bottom: 12px;
+        }
+      h2 {
+        font-size: 1em;
+      }
+    }
+  }
+  .building {
+    h2.padding {
+      padding-top:20px; 
+    }
+    h3 {
+      padding-top: 20px;
+    }
+  }
+
+  .sectioned-page-wrapper{
+    .section.section-cta{
+      .container{
+        max-width: 680px;
+      }
+    }
+  }
+
+
+
+  /* # Sidebars
+  ---------------------------------------------------------------------------------------------------- */
+
+  .sidebar {
+    .widget,
+    .sidebarcontent  {
+      padding: 2em 0;
+    }
+  }
+
+
+  /* # Footer Widgets
+---------------------------------------------------------------------------------------------------- */
+
+  .footer-widgets {
+    padding-top: 2em;
+  }
+
+
+  /* # Site Footer
+  ---------------------------------------------------------------------------------------------------- */
+
+  .site-footer {
+  }
+}
+
+@media only screen and (min-width: 1380px) {
+  .container{
+    width: 1280px;
+  }
+}

@@ -1,0 +1,59 @@
+@import "bootstrap-overrides.scss";
+@import "mixins.scss";
+
+.single-team_member{
+  .page-title-area{
+    h4.team-title{
+      font-size: 2.4em;
+      font-weight: 400;
+      color: $white;
+    }
+  }
+  .team_member-header{
+    &.container{
+      padding: 3em 5em;
+      border-bottom: 4px solid $orange;
+      margin-bottom: 2em;
+      background: $white;
+    }
+  article {
+		  line-height: 1.3;
+		  padding-bottom: .75em;
+	  }
+	  a{
+      color: $dkgrey;
+    }
+    h3{ color: $orange; font-size: 1.6em; font-weight: 600;}
+    ul.team-contact{
+      li{display: inline-block;font-size: 1.6em;margin-right: 0.5em;}
+    }
+  }
+  .site-inner{
+    .content-sidebar-wrap{
+      background: url(../images/content-left.svg) top right no-repeat;
+      background-size: 100% auto;
+      padding-right: 30%;
+      padding-bottom: 0;
+      min-height: 305px;
+    }
+  }
+}
+
+
+@media only screen and (min-width: 768px) {
+  .sectioned-page-wrapper{
+    .section.section-transform-and-operate{
+      .section-body{
+        .container{
+          .row{
+            .section-content{
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 992px) {
+}

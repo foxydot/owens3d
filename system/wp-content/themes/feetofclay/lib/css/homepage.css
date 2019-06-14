@@ -1,0 +1,65 @@
+@import url("//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i");
+@import url("//fonts.googleapis.com/css?family=Fredericka+the+Great&display=swap");
+@media print {
+  a[href]:after {
+    content: "" !important; }
+  div.pre-header, #sticky-wrapper, header.site-header, aside.sidebar {
+    display: none !important; }
+  div.print-header {
+    margin-bottom: 1em; }
+  main.content {
+    width: 100% !important; }
+    main.content p {
+      page-break-inside: avoid; } }
+
+.square {
+  overflow: hidden; }
+  .square.col-xs-12 {
+    padding-bottom: 100%; }
+
+@media (min-width: 768px) {
+  .square.col-sm-6 {
+    padding-bottom: 50%; } }
+
+@media (min-width: 992px) {
+  .col-md-custom20 {
+    width: 20%; }
+  .square.col-md-4 {
+    padding-bottom: 33.33333333%; }
+  .square.col-md-custom20 {
+    padding-bottom: 20%; } }
+
+@media (max-width: 767px) {
+  .row.column-holder {
+    margin: 0; } }
+
+/* Import Fonts
+------------------------------------------------------------ */
+/* Font Stacks */
+/* Colors */
+/* Neutrals */
+/* Default Colors */
+/* Social Colors */
+@media only screen and (max-width: 767px) {
+  .home .sectioned-page-wrapper .section.section-impact .section-body {
+    overflow: hidden;
+    position: relative; }
+    .home .sectioned-page-wrapper .section.section-impact .section-body .previous, .home .sectioned-page-wrapper .section.section-impact .section-body .next {
+      font-family: FontAwesome;
+      position: absolute;
+      top: 40%;
+      font-size: 20vw;
+      color: rgba(15, 60, 108, 0.2);
+      z-index: 2000; }
+    .home .sectioned-page-wrapper .section.section-impact .section-body .previous {
+      left: 3px; }
+    .home .sectioned-page-wrapper .section.section-impact .section-body .next {
+      right: 3px; }
+    .home .sectioned-page-wrapper .section.section-impact .section-body .column-holder {
+      left: 0%;
+      position: relative;
+      width: 300%; } }
+
+@media only screen and (min-width: 768px) {
+  .sectioned-page-wrapper .section.one-col:not(.full-width).section-words-matter .section-body {
+    max-width: 50%; } }

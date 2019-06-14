@@ -1,0 +1,225 @@
+/* # Plugins
+---------------------------------------------------------------------------------------------------- */
+
+/* ## Genesis eNews Extended
+--------------------------------------------- */
+
+.sidebar .enews-widget,
+.sidebar .enews-widget .widget-title {
+  color: #fff;
+}
+
+.sidebar .widget.enews-widget {
+  background-color: #333;
+}
+
+.sidebar .enews-widget input,
+.sidebar .enews-widget input:focus {
+  border: 1px solid #333;
+}
+
+.sidebar .enews-widget input[type="submit"] {
+  background-color: #c3251d;
+  color: #fff;
+}
+
+.sidebar .enews-widget input[type="submit"]:focus,
+.sidebar .enews-widget input[type="submit"]:hover  {
+  background-color: #fff;
+  color: #333;
+}
+
+.enews-widget input {
+  font-size: 16px;
+  font-size: 1.6rem;
+  margin-bottom: 16px;
+}
+
+.enews-widget input[type="submit"] {
+  margin: 0;
+  width: 100%;
+}
+
+.enews form + p {
+  margin-top: 24px;
+}
+
+.sidebar{
+  .textwidget{
+  }
+  .featured-content{
+    border-top: 1px solid $blue;
+    border-bottom: 1px solid $blue;
+    .entry-content{
+      font-size: 0.9em;
+    }
+  }
+}
+
+/* ## Jetpack
+--------------------------------------------- */
+
+#wpstats {
+  display: none;
+}
+
+/* ## Gravity Forms
+--------------------------------------------- */
+.sectioned-page-wrapper .section .gform_wrapper ul li:before{
+  background: none;
+}
+.site-inner {
+  .gform_wrapper {
+    margin: 0;
+    .gform_heading {
+      .gform_title{
+        display: inline;
+        font-weight: 700;
+        font-size: 1.6em;
+      }
+      .gform_description {
+        display: inline;
+        font-style: italic;
+        font-weight: 400;
+        font-size: 1.6em;
+      }
+    }
+    .gform_body {
+      ul.gform_fields {
+        li.gfield {
+          margin-bottom: 0.5em;
+          text-indent: 0;
+          .ginput_container {
+            font-size: 1.2em;
+            input[type="text"]{
+              position: relative;
+              margin: 0 auto;
+            }
+          }
+        }
+      }
+    }
+    .gform_footer {
+      text-align: center;
+      display: block;
+      width: 100%;
+      input.button,
+      input[type=submit] {
+        display: inline-block;
+        margin: 0 !important;
+      }
+    }
+    &.hide-labels_wrapper{
+      .gform_body {
+        ul.gform_fields {
+          li.gfield {
+            .gfield_label{
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+  .sidebar{
+    .gform_wrapper {
+      .gform_body {
+        li.gfield {
+          background: rgb(234, 243, 251);
+          .ginput_container {
+            input, textarea {
+              background: rgba(234,243,251,0);
+            }
+          }
+          &.white {
+            background: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+.social-media {
+  margin: 0.25vw 0;
+  float: none;
+  margin: 0 auto;
+  a, a:hover {
+    float: none;
+    display: inline-block;
+    &:before {
+      opacity: 1;
+    }
+  }
+  a.fa {
+    border-radius: 100%;
+    font-size: 6vw;
+    height: 9vw;
+    line-height: 1.5;
+    margin: 2vw;
+    width: 9vw;
+  }
+  a.fa.last-child {
+    margin-right: 0;
+  }
+}
+.social-sharing{
+  display: block;
+  margin-top: 1em;
+  a[class^="ss-button-"]{
+    float: left;
+    font-size: 1.4em;
+    text-align: center;
+    width: 1.25em;
+    height: 1.25em;
+    padding: 0;
+    text-decoration: none;
+    margin: 0 0.5em 0 0 ;
+    line-height: 1.25em;
+    border-radius: 100%;
+    overflow: hidden;
+    color: #ffffff;
+    &:before {
+      display: block;
+      font-family: FontAwesome;
+    }
+    &:hover{
+      color: rgba($white,0.6);
+    }
+  }
+  a.ss-button-facebook{
+    background-color:$facebook;
+    &:before{
+      content: '\f09a';
+    }
+  }
+  a.ss-button-linkedin{
+    background-color:$linkedin;
+    &:before{
+      content: '\f0e1';
+    }
+  }
+  a.ss-button-twitter{
+    background-color:$twitter;
+    &:before{
+      content: '\f099';
+    }
+  }
+
+}
+.slick-slider{
+  .slide{
+    .slide__inner{
+      position: relative;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      a{
+        img{
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,47 @@
+@import "bootstrap-overrides.scss";
+@import "mixins.scss";
+.home {
+}
+
+
+@media only screen and (max-width: 767px) {
+  .home {
+    .sectioned-page-wrapper{
+      .section.section-impact{
+        .section-body{
+          overflow: hidden;
+          position: relative;
+
+          .previous,.next{
+            @include fontawesome;
+            position: absolute;
+            top: 40%;
+            font-size: 20vw;
+            color: rgba($dkblue,0.2);
+            z-index: 2000;
+          }
+          .previous{
+            left: 3px;
+          }
+          .next{
+            right: 3px;
+          }
+          .column-holder{
+            left: 0%;
+            position: relative;
+            width: 300%;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .sectioned-page-wrapper .section.one-col:not(.full-width).section-words-matter .section-body{
+    max-width: 50%;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+}

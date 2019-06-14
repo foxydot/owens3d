@@ -1,0 +1,50 @@
+.icon{
+  display: inline-block;
+  min-height: 4.5em;
+  min-width: 4.5em;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  &.icon-25{
+    background-image: url(../images/icons/icon-25.svg);
+  }
+  &.icon-arrow-blue{
+    background-image: url(../images/icons/icon-arrow-blue.svg);
+  }
+  &.icon-arrow-orange{
+    background-image: url(../images/icons/icon-arrow-orange.svg);
+  }
+  &.icon-asterisk{
+    background-image: url(../images/icons/icon-asterisk.svg);
+  }
+  &.icon-bang{
+    background-image: url(../images/icons/icon-bang.svg);
+  }
+  &.icon-emoji-whoa{
+    background-image: url(../images/icons/icon-emoji-whoa.svg);
+  }
+  &.icon-envelope{
+    background-image: url(../images/icons/icon-envelope.svg);
+  }
+  &.icon-fb{
+    background-image: url(../images/icons/icon-fb.svg);
+  }
+  &.icon-gear{
+    background-image: url(../images/icons/icon-gear.svg);
+  }
+  &.icon-paper{
+    background-image: url(../images/icons/icon-paper.svg);
+  }
+  &.icon-pie{
+    background-image: url(../images/icons/icon-pie.svg);
+  }
+  &.icon-plug{
+    background-image: url(../images/icons/icon-plug.svg);
+  }
+  &.icon-talk{
+    background-image: url(../images/icons/icon-talk.svg);
+  }
+  &.icon-tweet{
+    background-image: url(../images/icons/icon-tweet.svg);
+  }
+}

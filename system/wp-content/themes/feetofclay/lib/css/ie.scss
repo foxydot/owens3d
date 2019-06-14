@@ -1,0 +1,65 @@
+/* Welcome to Compass. Use this file to write IE specific override styles.
+ * Import this file using the following HTML or equivalent:
+ * <!--[if IE]>
+ *   <link href="/stylesheets/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
+ * <![endif]--> */
+.ie {
+  .sectioned-page-wrapper {
+    .section.bkg-dna {
+      &.full-width-bkg {
+        background-image: url(../images/pngsforie/dna.png);
+      }
+    }
+    .section.bkg-logo-right {
+      .section-body {
+        .container {
+          background: url(../images/pngsforie/content-right.png) top left no-repeat;
+        }
+      }
+    }
+    .section.bkg-logo-left {
+      .section-body {
+        .container {
+          background: url(../images/pngsforie/content-left.png) top right no-repeat;
+        }
+      }
+    }
+    .section.section-what-how{
+      .section-content {
+        background-image: url(../images/pngsforie/focus.png);
+      }
+    }
+  }
+
+  &.home {
+    .page-title-area {
+      .texturize {
+        .gradient {
+          .container {
+            background: url(../images/pngsforie/content-left.png) top right no-repeat;
+          }
+        }
+      }
+    }
+    .sectioned-page-wrapper{
+      .section.section-transform-and-operate{
+        .section-body{
+          .container{
+            .row{
+              .section-content{
+                width: calc(50% - 2em);
+              }
+            }
+          }
+        }
+      }
+      .section.section-where-we-focus {
+        .section-body {
+          .container {
+            background-image: url(../images/pngsforie/focus.png);
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,165 @@
+@media only screen and (min-width: 1039px) {
+
+  .header-full-width {
+    .site-header {
+      .title-area {
+        float: left;
+        width: 25%;
+      }
+    }
+  }
+
+  .header-image .site-title > a {
+    background-position: center left;
+    background-image: url(../images/tos_logo.svg);
+  }
+
+  .mobile-trigger1{
+    display: none;
+  }
+
+
+
+  .page-title-area{
+    .texturize{
+      .gradient{
+        .container{
+          .entry-title {
+            a {
+            }
+          }
+        }
+      }
+    }
+  }
+  .title-align-center{
+    .page-title-area .texturize .gradient .container{
+      .entry-title{
+        font-size: 8em;
+      }
+    }
+  }
+
+  /* Accessible Menu
+  --------------------------------------------- */
+
+  .menu .menu-item:focus {
+    position: static;
+  }
+
+  .menu .menu-item > a:focus + ul.sub-menu,
+  .menu .menu-item.sfHover > ul.sub-menu {
+    left: auto;
+    opacity: 1;
+  }
+
+  .menu-toggle,
+  .sub-menu-toggle {
+    display: none;
+    visibility: hidden;
+  }
+
+
+  .social-media {
+    margin: 0.5em 0;
+    margin: 0 auto;
+    a.fa {
+      font-size: 2em;
+      height: 1.25em;
+      margin: 0.5em;
+      line-height: 1.25;
+      width: 1.25em;
+    }
+    a.fa.last-child {
+      margin-right: 0;
+    }
+  }
+
+  .footer-widgets {
+    .footer-widget-area {
+      .search-form input:focus {
+        border: 0 solid #ddd;
+      }
+    }
+  }
+
+
+  /* # Site Footer
+  ---------------------------------------------------------------------------------------------------- */
+
+  .site-footer {
+    font-size: 1.2em;
+  }
+
+  //sections
+  .sectioned-page-wrapper {
+    .section {
+      .section-body {
+        .container {
+        }
+      }
+    }
+    .section.column-border {
+      .column-holder {
+        display: inline-flex;
+        justify-content: center;
+      }
+    }
+    .section.align-buttons-bottom{
+      .section-body{
+        .container {
+          .column-holder {
+            display: inline-flex;
+            justify-content: center;
+            .btn-wrapper{
+              .btn {
+                margin: 0 4px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* ## Gravity Forms
+--------------------------------------------- */
+  .site-inner {
+    .sidebar{
+      .gform_wrapper {
+        .gform_body {
+          li.gfield {
+            background: rgb(234, 243, 251);
+            .ginput_container {
+              input, textarea {
+                background: rgba(234,243,251,0);
+              }
+            }
+            &.white {
+              background: none;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .header-image .site-title a {
+    width: 6em;
+  }
+
+  body.product{
+    .sectioned-page-wrapper{
+      .section{
+        .section-body {
+          .container {
+            .column-holder {
+              align-items: center;
+            }
+          }
+        }
+      }
+    }
+
+  }
+}

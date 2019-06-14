@@ -15,6 +15,7 @@ if(genesis_test()):
     // Initialize Genesis.
     remove_all_actions('genesis_entry_header');
     remove_all_actions('genesis_entry_content');
+    remove_all_filters('genesis_attr_content-sidebar-wrap');
     global $msd_custom;
     add_action('genesis_entry_content',array($msd_custom->artwork_class,'cpt_display'));
     genesis();

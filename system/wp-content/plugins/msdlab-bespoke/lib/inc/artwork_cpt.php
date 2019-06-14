@@ -302,10 +302,8 @@ if (!class_exists('MSDArtworkCPT')) {
                     if($_artwork_gallery) {
                         $gallery[] = do_shortcode($_artwork_gallery);
                     }
-                    if($_artwork_video){
-                        $gallery[] = '<h3>The Process</h3>';
-                        $gallery[] = apply_filters('the_content',$_artwork_video);
-                    }
+
+
 $terms = get_the_terms( get_the_ID(), 'artwork_category' );
 
 if ( $terms && ! is_wp_error( $terms ) ) :
@@ -318,6 +316,8 @@ if ( $terms && ! is_wp_error( $terms ) ) :
 
     $on_draught = join( ", ", $draught_links );
 endif;
+                    $info[] = '<div class="details">';
+                    $info[] = '<h3>Details</h3>';
                     $info[] = $on_draught;
                     $info[] = do_shortcode($post->post_content);
                     if($_artwork_price) {
@@ -329,11 +329,21 @@ endif;
                     if($_artwork_height || $_artwork_width || $_artwork_depth) {
                         $info[] = '<li>' . $_artwork_height . 'H x ' . $_artwork_width . 'W x ' .  $_artwork_depth . 'D </li>';
                     }
-                    if(has_term('available-for-purchase','artwork_category')){
-                        $info[] = '<div class="col-xs-12">'.do_shortcode('[gravityform id="1" title="true" description="true"]').'</div>';
+                    $info[] = '</div>';
+                    if($_artwork_video){
+                        $info[] = '<div class="process">';
+                        $info[] = '<h3>The Process</h3>';
+                        $info[] = apply_filters('the_content',$_artwork_video);
+                        $info[] = '</div>';
                     }
-                    $ret[] = '<div class="col-sm-8 col-xs-12">'.implode("\n",$gallery).'</div><div class="col-sm-4 col-xs-12">'.implode("\n",$info).'</div>';
-
+                    $ret[] = '<div class="artwork-gallery col-xs-12">'.implode("\n",$gallery).'</div>';
+                    $ret[] = '<div class="container">';
+                    if(has_term('available-for-purchase','artwork_category')){
+                        $ret[] = '<div class="col-sm-6 col-xs-12">'.implode("\n",$info).'</div><div class="col-sm-6 col-xs-12">'.do_shortcode('[gravityform id="1" title="true" description="true"]').'</div>';
+                    } else {
+                        $ret[] = '<div class="col-xs-12">'.implode("\n",$info).'</div>';
+                    }
+                    $ret[] = '</div>';
 				} else {
 					//display for aggregate here
 				}

@@ -82,6 +82,46 @@ if (!class_exists('MSDArtworkCPT')) {
 			register_taxonomy( 'artwork_category', array($this->cpt), $args );
 
 
+            $labels = array(
+                'name' => _x( 'Artwork series', 'artwork-series' ),
+                'singular_name' => _x( 'Artwork series', 'artwork-series' ),
+                'search_items' => _x( 'Search artwork series', 'artwork-series' ),
+                'popular_items' => _x( 'Popular artwork series', 'artwork-series' ),
+                'all_items' => _x( 'All artwork series', 'artwork-series' ),
+                'parent_item' => _x( 'Parent artwork series', 'artwork-series' ),
+                'parent_item_colon' => _x( 'Parent artwork series:', 'artwork-series' ),
+                'edit_item' => _x( 'Edit artwork series', 'artwork-series' ),
+                'update_item' => _x( 'Update artwork series', 'artwork-series' ),
+                'add_new_item' => _x( 'Add new artwork series', 'artwork-series' ),
+                'new_item_name' => _x( 'New artwork series name', 'artwork-series' ),
+                'separate_items_with_commas' => _x( 'Separate artwork series with commas', 'artwork-series' ),
+                'add_or_remove_items' => _x( 'Add or remove artwork series', 'artwork-series' ),
+                'choose_from_most_used' => _x( 'Choose from the most used artwork series', 'artwork-series' ),
+                'menu_name' => _x( 'Artwork series', 'artwork-series' ),
+            );
+
+            $args = array(
+                'labels' => $labels,
+                'public' => true,
+                'show_in_nav_menus' => true,
+                'show_ui' => true,
+                'show_tagcloud' => false,
+                'hierarchical' => true,
+
+                'rewrite' => array('slug'=>'artwork-series','with_front'=>false),
+                'query_var' => true,
+
+                'capabilities' => array(
+                    'manage_terms' => 'manage_categories',
+                    'edit_terms' => 'manage_categories',
+                    'delete_terms' => 'manage_categories',
+                    'assign_terms' => 'edit_page',
+                ),
+            );
+
+            register_taxonomy( 'artwork_series', array($this->cpt), $args );
+
+
 			$labels = array(
 				'name' => _x( 'Artwork tags', 'artwork-tag' ),
 				'singular_name' => _x( 'Artwork tag', 'artwork-tag' ),
@@ -299,6 +339,9 @@ if (!class_exists('MSDArtworkCPT')) {
                             $$field = false;
                         }
                     }
+                    if(has_post_thumbnail($post->ID)){
+                        $thumbnail = genesis_get_image(array("post_id"=>$post->ID));
+                    }
                     if($_artwork_gallery) {
                         $gallery[] = do_shortcode($_artwork_gallery);
                     }
@@ -336,8 +379,9 @@ endif;
                         $info[] = apply_filters('the_content',$_artwork_video);
                         $info[] = '</div>';
                     }
-                    $ret[] = '<div class="artwork-gallery col-xs-12">'.implode("\n",$gallery).'</div>';
                     $ret[] = '<div class="container">';
+                    $ret[] = '<div class="artwork-thumbnail col-sm-6 col-xs-12">'.$thumbnail.'</div>';
+                    $ret[] = '<div class="artwork-gallery col-sm-6 col-xs-12">'.implode("\n",$gallery).'</div>';
                     if(has_term('available-for-purchase','artwork_category')){
                         $ret[] = '<div class="col-sm-6 col-xs-12">'.implode("\n",$info).'</div><div class="col-sm-6 col-xs-12">'.do_shortcode('[gravityform id="1" title="true" description="true"]').'</div>';
                     } else {
@@ -362,6 +406,7 @@ endif;
 				'post-type' => $this->cpt,
 				'posts_per_page' => $count,
 			);
+            add_action('wp_footer',array($this,'add_page_css'));
 			return $this->msdlab_artwork_special($args);
 		}
 
@@ -448,15 +493,14 @@ endif;
 					'xhtml' => '<div class="footer">',
 					'echo' => false,
 				) );
-				$ret[] = '
-                           <a href="'.get_post_permalink($post->ID).'" class="full-cover-button"><span class="screen-reader-text">Read More</span></a>';  //add some ajax here
-
 				$ret[] = genesis_markup( array(
 					'html5' => '</footer>',
 					'xhtml' => '</div>',
 					'echo' => false,
 				) );
-				$ret[] = genesis_markup( array(
+                $ret[] = '
+                           <a href="'.get_post_permalink($post->ID).'" class="full-cover-button"><span class="screen-reader-text">Read More</span></a>';  //add some ajax here
+                $ret[] = genesis_markup( array(
 					'html5' => '</main>',
 					'xhtml' => '</div>',
 					'echo' => false,
@@ -630,6 +674,13 @@ endif;
             }
 
             return $return_template;
+        }
+
+        function add_page_css(){
+            $css[] = 'article.artwork main {position: relative;}';
+            $css[] = 'article.artwork main .full-cover-button {position: absolute;top:0;bottom:0;left:0;right:0;display:block;}';
+
+		    print '<style id="artwork-aggregate-css">'.implode("\n",$css).'</style>';
         }
 	} //End Class
 } //End if class exists statement

@@ -13,8 +13,9 @@ if(genesis_test()):
      */
 
     // Initialize Genesis.
-    global $msd_custom;
-    add_action('genesis_entry_content',array($msd_custom->news_class,'cpt_display'));
+    add_action('genesis_before_loop',array('MSDNewsCPT','do_archive_description'));
+    remove_action('genesis_loop','genesis_do_loop');
+    add_action('genesis_loop',array('MSDNewsCPT','custom_loop'));
     genesis();
 else:
     print 'not genesis, sorry.';

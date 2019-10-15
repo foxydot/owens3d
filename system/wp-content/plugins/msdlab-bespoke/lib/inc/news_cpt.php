@@ -2,7 +2,7 @@
 if (!class_exists('MSDNewsCPT')) {
 	class MSDNewsCPT {
 		//Properties
-		var $cpt = 'msd_news';
+		var $cpt = 'news';
 		//Methods
 		/**
 		 * PHP 4 Compatible Constructor
@@ -30,7 +30,7 @@ if (!class_exists('MSDNewsCPT')) {
 			//Filters
 			//add_filter( 'pre_get_posts', array(&$this,'custom_query') );
 			add_filter( 'enter_title_here', array(&$this,'change_default_title') );
-			//add_filter('template_include', array(&$this,'my_theme_redirect'),99);
+			add_filter('template_include', array(&$this,'my_theme_redirect'),99);
 			add_filter( 'genesis_attr_news', array(&$this,'custom_add_news_attr') );
 
 
@@ -146,7 +146,7 @@ if (!class_exists('MSDNewsCPT')) {
 				'labels' => $labels,
 				'hierarchical' => false,
 				'description' => 'News',
-				'supports' => array( 'title','editor', 'excerpt', 'author', 'thumbnail' ),
+				'supports' => array( 'title','editor', 'excerpt', 'author', 'thumbnail', 'genesis-cpt-archives-settings' ),
 				'taxonomies' => array( 'news_category', 'news_tag' ),
 				'public' => true,
 				'show_ui' => true,
@@ -238,6 +238,7 @@ if (!class_exists('MSDNewsCPT')) {
 		function my_theme_redirect($return_template) {
 			global $wp;
 			if(!is_cpt($this->cpt)){
+			    error_log('not '.$this->cpt);
 				return $return_template;
 			}
 			//A Specific Custom Post Type
@@ -386,7 +387,7 @@ if (!class_exists('MSDNewsCPT')) {
 				if (is_single()){
 					//display content here
 				} else {
-					//display for aggregate here
+				    //handled in template
 				}
 			}
 		}
@@ -445,42 +446,16 @@ if (!class_exists('MSDNewsCPT')) {
 					'xhtml' => '<div class="main">',
 					'echo' => false,
 				) );
-
-				$ret[] = genesis_markup( array(
-					'html5' => '<header>',
-					'xhtml' => '<div class="header">',
-					'echo' => false,
-				) );
-				$ret[] = get_the_post_thumbnail($result->ID,'bizcard',array('itemprop'=>'image'));
-
-				$ret[] = genesis_markup( array(
-					'html5' => '</header>',
-					'xhtml' => '</div>',
-					'echo' => false,
-				) );
 				$ret[] = genesis_markup( array(
 					'html5' => '<content>',
 					'xhtml' => '<div class="content">',
 					'echo' => false,
 				) );
 
-				$ret[] = '<h3 class="entry-title" itemprop="name">'.apply_filters('the_title',$post->post_title).'</h3>';
-				$ret[] = '<p class="date">'.get_the_date('F j, Y',$post->ID).'</p>';
+				$ret[] = '<h3 class="entry-title" itemprop="name"><a href="'.$url.'">'.apply_filters('the_title',$post->post_title).'</a></h3>';
+				$ret[] = '<p class="date"><a href="'.$url.'">'.get_the_date('F j, Y',$post->ID).'</a></p>';
 				$ret[] = genesis_markup( array(
 					'html5' => '</content>',
-					'xhtml' => '</div>',
-					'echo' => false,
-				) );
-				$ret[] = genesis_markup( array(
-					'html5' => '<footer>',
-					'xhtml' => '<div class="footer">',
-					'echo' => false,
-				) );
-				$ret[] = '
-                           <a href="'.$url.'" class="full-cover-button"><span class="screen-reader-text">Read More</span></a>';  //add some ajax here
-
-				$ret[] = genesis_markup( array(
-					'html5' => '</footer>',
 					'xhtml' => '</div>',
 					'echo' => false,
 				) );
@@ -531,6 +506,15 @@ if (!class_exists('MSDNewsCPT')) {
 			while($recents->have_posts()) {
 				$recents->the_post();
 				$news_info->the_meta($post->ID);
+                $articles = get_post_meta($post->ID,'_news_articles',1);
+                $url = $articles[0]['newsurl'];
+                if($url == ''){
+                    $url = get_post_permalink($post->ID);
+                    $target = '_self';
+                } else {
+                    $target = '_blank';
+                }
+
 				$item = array();
 				$item[] = genesis_markup( array(
 					'html5'   => '<article %s>',
@@ -549,49 +533,15 @@ if (!class_exists('MSDNewsCPT')) {
 					'xhtml' => '<div class="main">',
 					'echo' => false,
 				) );
-
-				$item[] = genesis_markup( array(
-					'html5' => '<header>',
-					'xhtml' => '<div class="header">',
-					'echo' => false,
-				) );
-				$item[] = get_the_post_thumbnail($post->ID,'bizcard',array('itemprop'=>'image'));
-
-				$item[] = genesis_markup( array(
-					'html5' => '</header>',
-					'xhtml' => '</div>',
-					'echo' => false,
-				) );
 				$item[] = genesis_markup( array(
 					'html5' => '<content>',
 					'xhtml' => '<div class="content">',
 					'echo' => false,
 				) );
-
-				$item[] = '<h3 class="entry-title" itemprop="name">'.apply_filters('the_title',$post->post_title).'</h3>';
-				//$item[] = '<p class="date">'.get_the_date('F j, Y',$post->ID).'</p>';
+                $item[] = '<h3 class="entry-title" itemprop="name"><a href="'.$url.'" target="'.$target.'">'.apply_filters('the_title',$post->post_title).'</a></h3>';
+                $item[] = '<p class="date"><a href="'.$url.'" target="'.$target.'">'.get_the_date('F j, Y',$post->ID).'</a></p>';
 				$item[] = genesis_markup( array(
 					'html5' => '</content>',
-					'xhtml' => '</div>',
-					'echo' => false,
-				) );
-				$item[] = genesis_markup( array(
-					'html5' => '<footer>',
-					'xhtml' => '<div class="footer">',
-					'echo' => false,
-				) );
-				$articles = get_post_meta($post->ID,'_news_articles',1);
-				$url = $articles[0]['newsurl'];
-				if($url != ''){
-					$item[] = '
-                           <a href="' . $url . '" class="full-cover-button" target="_blank"><span class="screen-reader-text">Read More</span></a>';  //add some ajax here
-
-				} else {
-					$item[] = '
-                           <a href="' . get_permalink( $post->ID ) . '" class="full-cover-button"><span class="screen-reader-text">Read More</span></a>';  //add some ajax here
-				}
-				$item[] = genesis_markup( array(
-					'html5' => '</footer>',
 					'xhtml' => '</div>',
 					'echo' => false,
 				) );
@@ -642,10 +592,18 @@ if (!class_exists('MSDNewsCPT')) {
 		 * @return array $attributes The element attributes
 		 */
 		function custom_add_news_attr( $attributes ){
-			$attributes['class'] .= ' equalize col-xs-12 col-sm-6 col-md-4';
 			$attributes['itemtype']  = 'http://schema.org/NewsArticle';
 			// return the attributes
 			return $attributes;
 		}
+
+		function do_archive_description(){
+            $archive_settings = get_option( 'genesis-cpt-archive-settings-news' );
+            if($archive_settings['intro_text']!==''){
+                echo '<div>';
+                echo $archive_settings['intro_text'];
+                echo '</div>';
+            }
+        }
 	} //End Class
 } //End if class exists statement

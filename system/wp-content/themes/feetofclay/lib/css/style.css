@@ -621,8 +621,8 @@ th:first-child {
 
 .entry-title a,
 .sidebar .widget-title a {
-  text-decoration: none;
-  color: #0f3c6c; }
+  cursor: pointer;
+  text-decoration: none; }
 
 .widget-title {
   font-family: 'Roboto', sans-serif;

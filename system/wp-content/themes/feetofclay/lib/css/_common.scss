@@ -93,8 +93,8 @@
 
 .entry-title a,
 .sidebar .widget-title a {
+  cursor: pointer;
   text-decoration: none;
-  color: $dkblue;
 }
 
 .entry-title a:focus,

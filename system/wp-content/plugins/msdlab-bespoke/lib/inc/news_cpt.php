@@ -28,7 +28,7 @@ if (!class_exists('MSDNewsCPT')) {
 
 
 			//Filters
-			//add_filter( 'pre_get_posts', array(&$this,'custom_query') );
+			add_filter( 'pre_get_posts', array(&$this,'custom_query') );
 			add_filter( 'enter_title_here', array(&$this,'change_default_title') );
 			add_filter('template_include', array(&$this,'my_theme_redirect'),99);
 			add_filter( 'genesis_attr_news', array(&$this,'custom_add_news_attr') );
@@ -267,6 +267,9 @@ if (!class_exists('MSDNewsCPT')) {
 					return $query;
 				}
 				if($query->is_main_query()) {
+                    if($query->query["post_type"]){
+                        return $query;
+                    }
 					$post_types = $query->get('post_type');             // Get the currnet post types in the query
 
 					if(!is_array($post_types) && !empty($post_types))   // Check that the current posts types are stored as an array

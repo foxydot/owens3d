@@ -617,7 +617,8 @@ th:first-child {
   font-size: 2rem; }
 
 .entry-title {
-  font-weight: 400; }
+  font-size: 1.8em;
+  font-weight: 600; }
 
 .entry-title a,
 .sidebar .widget-title a {
@@ -1741,7 +1742,7 @@ a.white-link {
       font-weight: 400;
       font-size: 1.5em;
       line-height: 1.25;
-      color: #0f3c6c; }
+      color: #FFF; }
   .genesis-blog-grid .entry-wrap .entry-content .button {
     display: block;
     text-align: center;
@@ -1752,117 +1753,6 @@ a.white-link {
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed; }
-
-@media only screen and (min-width: 768px) {
-  .white-top.header-image .site-title > a {
-    background-image: url(../images/persado-logo-tagline-white.svg); } }
-
-.page.product .site-header {
-  background-color: #e8ebf1; }
-
-.single-press_release .page-title-area, .single-resource .page-title-area {
-  margin-bottom: 2em; }
-
-article.team, article.location, article.news, article.press, article.resource {
-  margin-bottom: 2em; }
-  article.team > .wrap, article.location > .wrap, article.news > .wrap, article.press > .wrap, article.resource > .wrap {
-    position: relative; }
-    article.team > .wrap main content, article.location > .wrap main content, article.news > .wrap main content, article.press > .wrap main content, article.resource > .wrap main content {
-      padding: 1em 0;
-      text-align: left; }
-      article.team > .wrap main content .entry-title, article.location > .wrap main content .entry-title, article.news > .wrap main content .entry-title, article.press > .wrap main content .entry-title, article.resource > .wrap main content .entry-title {
-        padding: 0.5em 0 0;
-        font-family: 'Roboto', sans-serif;
-        text-rendering: optimizeLegibility !important;
-        -webkit-font-smoothing: antialiased !important;
-        font-weight: 400;
-        font-size: 1.5em;
-        line-height: 1.25;
-        margin: 0; }
-      article.team > .wrap main content .team-title, article.team > .wrap main content .date, article.location > .wrap main content .team-title, article.location > .wrap main content .date, article.news > .wrap main content .team-title, article.news > .wrap main content .date, article.press > .wrap main content .team-title, article.press > .wrap main content .date, article.resource > .wrap main content .team-title, article.resource > .wrap main content .date {
-        font-size: 1em;
-        font-weight: 500; }
-      article.team > .wrap main content .date, article.location > .wrap main content .date, article.news > .wrap main content .date, article.press > .wrap main content .date, article.resource > .wrap main content .date {
-        padding-top: 0.5em; }
-
-.sectioned-page-wrapper .section ul li[class*="icon"] {
-  display: block;
-  min-height: 2em;
-  min-width: 2em; }
-  .sectioned-page-wrapper .section ul li[class*="icon"]:before {
-    height: 2em;
-    width: 2em; }
-  .sectioned-page-wrapper .section ul li[class*="icon"].icon-25:before {
-    background-image: url(../images/icons/icon-25.svg); }
-  .sectioned-page-wrapper .section ul li[class*="icon"].icon-arrow-blue:before {
-    background-image: url(../images/icons/icon-arrow-blue.svg); }
-  .sectioned-page-wrapper .section ul li[class*="icon"].icon-arrow-orange:before {
-    background-image: url(../images/icons/icon-arrow-orange.svg); }
-  .sectioned-page-wrapper .section ul li[class*="icon"].icon-asterisk:before {
-    background-image: url(../images/icons/icon-asterisk.svg); }
-  .sectioned-page-wrapper .section ul li[class*="icon"].icon-bang:before {
-    background-image: url(../images/icons/icon-bang.svg); }
-  .sectioned-page-wrapper .section ul li[class*="icon"].icon-emoji-whoa:before {
-    background-image: url(../images/icons/icon-emoji-whoa.svg); }
-  .sectioned-page-wrapper .section ul li[class*="icon"].icon-envelope:before {
-    background-image: url(../images/icons/icon-envelope.svg); }
-  .sectioned-page-wrapper .section ul li[class*="icon"].icon-fb:before {
-    background-image: url(../images/icons/icon-fb.svg); }
-  .sectioned-page-wrapper .section ul li[class*="icon"].icon-gear:before {
-    background-image: url(../images/icons/icon-gear.svg); }
-  .sectioned-page-wrapper .section ul li[class*="icon"].icon-paper:before {
-    background-image: url(../images/icons/icon-paper.svg); }
-  .sectioned-page-wrapper .section ul li[class*="icon"].icon-pie:before {
-    background-image: url(../images/icons/icon-pie.svg); }
-  .sectioned-page-wrapper .section ul li[class*="icon"].icon-plug:before {
-    background-image: url(../images/icons/icon-plug.svg); }
-  .sectioned-page-wrapper .section ul li[class*="icon"].icon-talk:before {
-    background-image: url(../images/icons/icon-talk.svg); }
-  .sectioned-page-wrapper .section ul li[class*="icon"].icon-tweet:before {
-    background-image: url(../images/icons/icon-tweet.svg); }
-
-.sectioned-page-wrapper .section.section-winning .section-body .container .section-content p.last-child {
-  margin-bottom: -15px; }
-
-.sectioned-page-wrapper .section.section-quick-stats .section-body .container .column-holder {
-  align-items: flex-end; }
-  .sectioned-page-wrapper .section.section-quick-stats .section-body .container .column-holder h2.customers-counter {
-    font-family: 'Roboto', sans-serif;
-    text-rendering: optimizeLegibility !important;
-    -webkit-font-smoothing: antialiased !important;
-    font-weight: 400;
-    font-size: 1.6em; }
-  .sectioned-page-wrapper .section.section-quick-stats .section-body .container .column-holder img {
-    max-height: 150px; }
-
-.rollbox-set .rollbox {
-  text-align: center;
-  margin-bottom: 1em; }
-  .rollbox-set .rollbox .rollbox-wrapper {
-    background-color: #b1c5d1;
-    padding: 1em; }
-    .rollbox-set .rollbox .rollbox-wrapper img.icon {
-      max-width: 50%;
-      display: block;
-      margin: 0 auto; }
-    .rollbox-set .rollbox .rollbox-wrapper a {
-      display: block;
-      color: #333;
-      text-decoration: none !important; }
-    .rollbox-set .rollbox .rollbox-wrapper h2 {
-      color: #ff6600;
-      font-weight: 800;
-      margin-bottom: 0;
-      font-size: 3em; }
-    .rollbox-set .rollbox .rollbox-wrapper .rollbox-on {
-      height: 0;
-      overflow: hidden; }
-      .rollbox-set .rollbox .rollbox-wrapper .rollbox-on .rollbox-wrapper-on {
-        padding: 1em; }
-      .rollbox-set .rollbox .rollbox-wrapper .rollbox-on a {
-        color: #FFF; }
-      .rollbox-set .rollbox .rollbox-wrapper .rollbox-on img.icon {
-        display: none; }
 
 .error404 .content-sidebar-wrap input[type=search] {
   max-width: 80%; }

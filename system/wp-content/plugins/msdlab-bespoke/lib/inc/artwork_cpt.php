@@ -25,6 +25,8 @@ if (!class_exists('MSDArtworkCPT')) {
 			add_action('admin_footer',array(&$this,'info_footer_hook') );
 
 			//Filters
+            add_filter( 'pre_get_posts', array(&$this,'custom_query') );
+
             add_filter('template_include', array(&$this,'theme_redirect'),99);
 
             add_filter( 'enter_title_here', array(&$this,'change_default_title') );
@@ -346,22 +348,29 @@ if (!class_exists('MSDArtworkCPT')) {
                         $gallery[] = do_shortcode($_artwork_gallery);
                     }
 
+//get the categories
+                    $terms = get_the_terms( get_the_ID(), 'artwork_category' );
 
-$terms = get_the_terms( get_the_ID(), 'artwork_category' );
+                    if ( $terms && ! is_wp_error( $terms ) ) :
 
-if ( $terms && ! is_wp_error( $terms ) ) :
+                        $cat_links = array();
 
-    $draught_links = array();
+                        foreach ( $terms as $term ) {
+                            $cat_links[] = $term->name;
+                        }
 
-    foreach ( $terms as $term ) {
-        $draught_links[] = $term->name;
-    }
+                        $cats = join( ", ", $cat_links );
+                    endif;
 
-    $on_draught = join( ", ", $draught_links );
-endif;
+//get the series
+                    $series_links = self::get_the_series();
+
                     $info[] = '<div class="details">';
                     $info[] = '<h3>Details</h3>';
-                    $info[] = $on_draught;
+                    if(count($series_links)>0){
+                        $info[] = '<li>Series: '.join( ", ", $series_links ).'</li>';
+                    }
+                    $info[] = $cats;
                     $info[] = do_shortcode($post->post_content);
                     if($_artwork_price) {
                         $info[] = '<li>' . $_artwork_price . '</li>';
@@ -436,7 +445,7 @@ endif;
 				        $$field = false;
                     }
                 }
-
+                $series_links = self::get_the_series();
 				$ret[] = genesis_markup( array(
 					'html5'   => '<article %s>',
 					'xhtml'   => '<div class="artwork status-publish has-post-thumbnail entry">',
@@ -474,6 +483,9 @@ endif;
 				) );
 
                 $ret[] = '<h3 class="entry-title" itemprop="name">'.apply_filters('the_title',$post->post_title).'</h3>';
+                if(count($series_links)>0){
+                    $ret[] = '<li>Series: '.join( ", ", $series_links ).'</li>';
+                }
                 if($_artwork_price) {
                     $ret[] = '<li>' . $_artwork_price . '</li>';
                 }
@@ -548,7 +560,14 @@ endif;
 			ob_start();
 			while($recents->have_posts()) {
 				$recents->the_post();
-				$artwork_info->the_meta($post->ID);
+                $fields = get_post_meta($post->ID,'_artwork_information_fields',true);
+                foreach ($fields as $field){
+                    $$field = get_post_meta($post->ID,$field,true);
+                    if(strlen($$field) == 0){
+                        $$field = false;
+                    }
+                }
+                $series_links = self::get_the_series();
 				$item = array();
 				$item[] = genesis_markup( array(
 					'html5'   => '<article %s>',
@@ -573,7 +592,7 @@ endif;
 					'xhtml' => '<div class="header">',
 					'echo' => false,
 				) );
-				$item[] = get_the_post_thumbnail($post->ID,'bizcard',array('itemprop'=>'image'));
+				$item[] = get_the_post_thumbnail($result->ID,'child_thumbnail',array('itemprop'=>'image'));
 
 				$item[] = genesis_markup( array(
 					'html5' => '</header>',
@@ -586,9 +605,21 @@ endif;
 					'echo' => false,
 				) );
 
-				$item[] = '<h3 class="entry-title" itemprop="name">'.apply_filters('the_title',$post->post_title).'</h3>';
-				//$item[] = '<p class="date">'.get_the_date('F j, Y',$post->ID).'</p>';
-				$item[] = genesis_markup( array(
+
+                $item[] = '<h3 class="entry-title" itemprop="name">'.apply_filters('the_title',$post->post_title).'</h3>';
+                if(count($series_links)>0){
+                    $item[] = '<li>Series: '.join( ", ", $series_links ).'</li>';
+                }
+                if($_artwork_price) {
+                    $item[] = '<li>' . $_artwork_price . '</li>';
+                }
+                if($_artwork_date) {
+                    $item[] = '<li>' . $_artwork_date . '</li>';
+                }
+                if($_artwork_height || $_artwork_width || $_artwork_depth) {
+                    $item[] = '<li>' . $_artwork_height . 'H x ' . $_artwork_width . 'W x ' .  $_artwork_depth . 'D </li>';
+                }
+                $item[] = genesis_markup( array(
 					'html5' => '</content>',
 					'xhtml' => '</div>',
 					'echo' => false,
@@ -598,16 +629,9 @@ endif;
 					'xhtml' => '<div class="footer">',
 					'echo' => false,
 				) );
-				$articles = get_post_meta($post->ID,'_artwork_articles',1);
-				$url = $articles[0]['artworkurl'];
-				if($url != ''){
-					$item[] = '
-                           <a href="' . $url . '" class="full-cover-button" target="_blank"><span class="screen-reader-text">Read More</span></a>';  //add some ajax here
+				$item[] = '
+                     <a href="' . get_permalink( $post->ID ) . '" class="full-cover-button"><span class="screen-reader-text">Read More</span></a>';  //add some ajax here
 
-				} else {
-					$item[] = '
-                           <a href="' . get_permalink( $post->ID ) . '" class="full-cover-button"><span class="screen-reader-text">Read More</span></a>';  //add some ajax here
-				}
 				$item[] = genesis_markup( array(
 					'html5' => '</footer>',
 					'xhtml' => '</div>',
@@ -654,16 +678,13 @@ endif;
 
 
         function theme_redirect($return_template) {
-            global $wp;
-            if(!is_cpt($this->cpt)){
-                return $return_template;
-            }
-            //A Specific Custom Post Type
-            if(is_single() && $wp->query_vars["post_type"] == $this->cpt){
-                $templatefilename = 'single-'.$this->cpt.'.php';
+            global $wp,$wp_query;
+            if(is_single() && $wp->query_vars["post_type"] == $this->cpt) {
+                $templatefilename = 'single-' . $this->cpt . '.php';
+            } elseif($wp->query_vars["artwork_series"]) {
+                $templatefilename = 'taxonomy-artwork_series.php';
             } elseif (is_archive() && $wp->query_vars["post_type"] == $this->cpt) {
-                $templatefilename = 'archive-'.$this->cpt.'.php';
-                //A Custom Taxonomy Page
+                $templatefilename = 'archive-' . $this->cpt . '.php';
             }
             if($templatefilename) {
                 if (file_exists(STYLESHEETPATH . '/' . $templatefilename)) {
@@ -676,11 +697,67 @@ endif;
             return $return_template;
         }
 
+
+        function custom_query( $query ) {
+            if(!is_admin()){
+                if(is_page()){
+                    return $query;
+                }
+                if($query->is_main_query()) {
+                    if($query->query["post_type"]){
+                        return $query;
+                    }
+                    $post_types = $query->get('post_type');             // Get the current post types in the query
+
+                    if(!is_array($post_types) && !empty($post_types))   // Check that the current posts types are stored as an array
+                        $post_types = explode(',', $post_types);
+
+                    if(empty($post_types))
+                        $post_types = array('post'); // If there are no post types defined, be sure to include posts so that they are not ignored
+
+                    if ($query->is_search) {
+                        $searchterm = $query->query_vars['s'];
+                        // we have to remove the "s" parameter from the query, because it will prevent the posts from being found
+                        $query->query_vars['s'] = "";
+
+                        if ($searchterm != "") {
+                            $query->set('meta_value', $searchterm);
+                            $query->set('meta_compare', 'LIKE');
+                        };
+                        $post_types[] = $this->cpt;                         // Add your custom post type
+
+                    } elseif ($query->is_archive) {
+                        $post_types[] = $this->cpt;                         // Add your custom post type
+                    }
+
+                    $post_types = array_map('trim', $post_types);       // Trim every element, just in case
+                    $post_types = array_filter($post_types);            // Remove any empty elements, just in case
+
+                    $query->set('post_type', $post_types);              // Add the updated list of post types to your query
+                }
+            }
+        }
+
         function add_page_css(){
             $css[] = 'article.artwork main {position: relative;}';
             $css[] = 'article.artwork main .full-cover-button {position: absolute;top:0;bottom:0;left:0;right:0;display:block;}';
 
 		    print '<style id="artwork-aggregate-css">'.implode("\n",$css).'</style>';
+        }
+
+        function get_the_series(){
+            $terms = get_the_terms( get_the_ID(), 'artwork_series' );
+
+            if ( $terms && ! is_wp_error( $terms ) ) :
+
+                $series_links = array();
+
+                foreach ( $terms as $term ) {
+                    $series_links[] = '<a href="'.get_term_link( $term, array( 'artwork_series') ).'">'.$term->name.'</a>';
+                }
+
+            endif;
+                return $series_links;
         }
 	} //End Class
 } //End if class exists statement

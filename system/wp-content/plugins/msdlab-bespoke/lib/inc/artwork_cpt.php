@@ -410,10 +410,12 @@ if (!class_exists('MSDArtworkCPT')) {
 		function shortcode_handler($atts){
 			extract(shortcode_atts( array(
 				'count' => -1,
+                'tax'   => 'artwork_series',
 			), $atts ));
 			$args = array(
 				'post-type' => $this->cpt,
 				'posts_per_page' => $count,
+                'tax' => $tax,
 			);
             add_action('wp_footer',array($this,'add_page_css'));
 			return $this->msdlab_artwork_special($args);
@@ -432,10 +434,95 @@ if (!class_exists('MSDArtworkCPT')) {
 
 			$results = array();
 			$results = get_posts($args);
+			//get terms in tax
+            //$terms = get_terms($args['tax']);
+            $terms = apply_filters('taxonomy-images-get-terms','',array('taxonomy'=>$args['tax']));
+            //first do the groups
+            foreach($terms AS $term) {
+                $ret[] = genesis_markup( array(
+                    'html5'   => '<article %s>',
+                    'xhtml'   => '<div class="artwork status-publish has-post-thumbnail entry">',
+                    'context' => 'artwork',
+                    'echo' => false,
+                ) );
+                $ret[] = genesis_markup( array(
+                    'html5' => '<div class="wrap">',
+                    'xhtml' => '<div class="wrap">',
+                    'echo' => false,
+                ) );
+
+                $ret[] = genesis_markup( array(
+                    'html5' => '<main>',
+                    'xhtml' => '<div class="main">',
+                    'echo' => false,
+                ) );
+
+                $ret[] = genesis_markup( array(
+                    'html5' => '<header>',
+                    'xhtml' => '<div class="header">',
+                    'echo' => false,
+                ) );
+                $ret[] = wp_get_attachment_image( $term->image_id, 'child_thumbnail', false, array('itemprop'=>'image') );
+
+                $ret[] = genesis_markup( array(
+                    'html5' => '</header>',
+                    'xhtml' => '</div>',
+                    'echo' => false,
+                ) );
+                $ret[] = genesis_markup( array(
+                    'html5' => '<content>',
+                    'xhtml' => '<div class="content">',
+                    'echo' => false,
+                ) );
+
+                $ret[] = '<h3 class="entry-title" itemprop="name"><strong>Series:</strong> '.apply_filters('the_title',$term->name).'</h3>';
+
+                $ret[] = genesis_markup( array(
+                    'html5' => '</content>',
+                    'xhtml' => '</div>',
+                    'echo' => false,
+                ) );
+                $ret[] = genesis_markup( array(
+                    'html5' => '<footer>',
+                    'xhtml' => '<div class="footer">',
+                    'echo' => false,
+                ) );
+                $ret[] = genesis_markup( array(
+                    'html5' => '</footer>',
+                    'xhtml' => '</div>',
+                    'echo' => false,
+                ) );
+                $ret[] = '
+                           <a href="'.get_term_link( $term, array( $args['tax'] ) ).'" class="full-cover-button"><span class="screen-reader-text">Read More</span></a>';  //add some ajax here
+                $ret[] = genesis_markup( array(
+                    'html5' => '</main>',
+                    'xhtml' => '</div>',
+                    'echo' => false,
+                ) );
+                $ret[] = genesis_markup( array(
+                    'html5' => '</div>',
+                    'xhtml' => '</div>',
+                    'echo' => false,
+                ) );
+                $ret[] = genesis_markup( array(
+                    'html5' => '</article>',
+                    'xhtml' => '</div>',
+                    'context' => 'artwork',
+                    'echo' => false,
+                ) );
+            }
+
 			//format result
 			$i = 0;
 			foreach($results AS $result){
 				$post = $result;
+				$is_series_item = false;
+				foreach($terms AS $term) {
+                    if (has_term($term->term_id, $args['tax'], $post)) {
+                        $is_series_item = true;
+                    }
+                }
+                if($is_series_item){continue;}
 				$i++;
 
 				$fields = get_post_meta($post->ID,'_artwork_information_fields',true);

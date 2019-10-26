@@ -367,11 +367,13 @@ if (!class_exists('MSDArtworkCPT')) {
 
                     $info[] = '<div class="details">';
                     $info[] = '<h3>Details</h3>';
+                    if($post->post_content != '') {
+                        $info[] = '<div class="post-content">'.do_shortcode($post->post_content).'</div>';
+                    }
                     if(count($series_links)>0){
                         $info[] = '<li>Series: '.join( ", ", $series_links ).'</li>';
                     }
                     $info[] = $cats;
-                    $info[] = do_shortcode($post->post_content);
                     if($_artwork_price) {
                         $info[] = '<li>' . $_artwork_price . '</li>';
                     }
@@ -515,6 +517,7 @@ if (!class_exists('MSDArtworkCPT')) {
 			//format result
 			$i = 0;
 			foreach($results AS $result){
+			    $_artwork_price = $_artwork_date = $_artwork_height = $_artwork_width = $_artwork_depth = false;
 				$post = $result;
 				$is_series_item = false;
 				foreach($terms AS $term) {
@@ -646,7 +649,8 @@ if (!class_exists('MSDArtworkCPT')) {
 //start loop
 			ob_start();
 			while($recents->have_posts()) {
-				$recents->the_post();
+                $_artwork_price = $_artwork_date = $_artwork_height = $_artwork_width = $_artwork_depth = false;
+                $recents->the_post();
                 $fields = get_post_meta($post->ID,'_artwork_information_fields',true);
                 foreach ($fields as $field){
                     $$field = get_post_meta($post->ID,$field,true);

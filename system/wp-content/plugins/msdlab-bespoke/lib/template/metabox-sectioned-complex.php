@@ -38,33 +38,6 @@
                 </select>
             </div>
         </div>
-        <div class="cell">
-            <label>CSS Classes</label>
-            <div class="input_container" style="-moz-column-count: 2;
--moz-column-gap: 1em;
--webkit-column-count: 2;
--webkit-column-gap: 1em;
-column-count: 2;
-column-gap: 1em;">
-                <?php $items = array(
-                    'Dark grey background' => 'bkg-dkgrey',
-                    'Light grey background' => 'bkg-ltgrey',
-                    'Offwhite background' => 'bkg-offwhite',
-                    'Green background' => 'bkg-green',
-                    'Navy background' => 'bkg-dkblue',
-                    'Diamond backgrond' => 'bkg-diamond',
-                    'Dark grey text' => 'text-dkgrey',
-                    'Navy text' => 'text-dkblue',
-                    'White text' => 'text-white',
-                    'Red Button' => 'btn-red',
-                    'White Button' => 'btn-white',
-                    'Center titles' => 'cntr-titles',); ?>
-                <?php foreach ($items as $i => $item): ?>
-                    <?php $mb->the_field('css-classes', WPALCHEMY_FIELD_HINT_CHECKBOX_MULTI); ?>
-                    <input type="checkbox" name="<?php $mb->the_name(); ?>" value="<?php echo $item; ?>"<?php $mb->the_checkbox_state($item); ?>/> <?php echo $i; ?><br/>
-                <?php endforeach; ?>
-            </div>
-        </div>
             <div class="cell">
 		        <?php $mb->the_field('custom-css-classes'); ?>
                 <label>Custom Classes</label>

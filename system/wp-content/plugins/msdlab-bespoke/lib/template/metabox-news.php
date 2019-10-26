@@ -25,7 +25,6 @@
         <th scope="row">
         </th>
         <td>
-            <p><a href="#" class="docopy-articles button">Add Article URL</a></p>
         </td>
     </tr>
 
